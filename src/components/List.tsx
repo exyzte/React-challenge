@@ -4,11 +4,16 @@ import './list.css';
 
 const List: React.FC = () => {
   const [data, setData] = useState<Item[]>([]);
+  const [filterText, setFilterText] = useState<string>('');
+
 
 
   const handleChange = async (event: any) => {
     try {
-      const response = await fetch(`https://api.disneyapi.dev/character?name=${event.target.value}`);
+      const text = event.target.value;
+      setFilterText(text);
+      console.log("what I typed", text, "what I have in state", filterText);
+      const response = await fetch(`https://api.disneyapi.dev/character?name=${text}`);
       if (!response.ok) {
         throw new Error(`Error HTTP: ${response.status}`);
       }
